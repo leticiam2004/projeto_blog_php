@@ -1,4 +1,4 @@
-<?php include "./header.php"; ?>
+<?php include "header.php"; ?>
 <?php 
     if(!empty($_POST)){
         echo "<div class='alert alert-success' role='alert'>
@@ -86,4 +86,4 @@
         </div>
     </div>
 
-<?php include "./footer.php"; ?>
+<?php include "footer.php"; ?>

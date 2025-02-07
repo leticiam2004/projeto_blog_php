@@ -1,5 +1,5 @@
 <?php
-include "./db.class.php";
+include "db.class.php";
 $db = new db("usuario");
 if (!empty($_POST)) {
     $user = $db->login($_POST);
@@ -26,5 +26,5 @@ if (!empty($_POST)) {
 
 
     <button type="submit">Entrar</button>
-    <a href="./UsuarioForm.php">Cadastrar</a>
+    <a href="UsuarioForm.php">Cadastrar</a>
 </form>

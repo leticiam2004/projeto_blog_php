@@ -34,21 +34,21 @@
         </ol>
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img class="d-block w-100 h-80vh" src="../img/pokemart-1.jpg" alt="Primeiro Slide">
+                <img class="d-block w-100 h-80vh" src="img/pokemart-1.jpg" alt="Primeiro Slide">
                 <div class="carousel-caption d-none d-md-block">
                     <h5 class="font-weight-bold">Seu ponto de encontro Pokémon favorito há 28 anos!</h5>
                     <p class="font-weight-light">Encontre tudo o que você precisa para suas aventuras</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100 h-80vh" src="../img/pokemart-2.jpg" alt="Segundo Slide">
+                <img class="d-block w-100 h-80vh" src="img/pokemart-2.jpg" alt="Segundo Slide">
                 <div class="carousel-caption d-none d-md-block">
                     <h5 class="text-dark font-weight-bold">Transforme sua coleção Pokémon em algo épico!</h5>
                     <p class="text-dark font-weight-light">Produtos oficiais e exclusivos do Japão</p>
                 </div>
             </div>
             <div class="carousel-item">
-                <img class="d-block w-100 h-80vh" src="../img/pokemart-3.jpg" alt="Terceiro Slide">
+                <img class="d-block w-100 h-80vh" src="img/pokemart-3.jpg" alt="Terceiro Slide">
                 <div class="carousel-caption d-none d-md-block">
                     <h5 class="font-weight-bold">A jornada Pokémon começa aqui!</h5>
                     <p class="font-weight-light">Compre seus itens favoritos e se prepare para a aventura</p>

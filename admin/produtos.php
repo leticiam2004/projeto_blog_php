@@ -1,4 +1,4 @@
-<?php include "./header.php";?>
+<?php include "header.php";?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
@@ -40,7 +40,7 @@
             <!-- pokeballs -->
             <div class="col">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-ball-pokeball.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-ball-pokeball.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Pokéball</h5>
                         <p class="card-text">¥200</p>
@@ -51,7 +51,7 @@
             </div>
             <div class="col">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-ball-greatball.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-ball-greatball.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">GreatBall</h5>
                         <p class="card-text">¥600</p>
@@ -62,7 +62,7 @@
             </div>
             <div class="col">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-ball-ultraball.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-ball-ultraball.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">UltraBall</h5>
                         <p class="card-text">¥1200</p>
@@ -75,7 +75,7 @@
             <!-- potions -->
             <div class="col-4 col-lg-2">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-heal-poison.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-heal-poison.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Cura Veneno</h5>
                         <p class="card-text">¥100</p>
@@ -86,7 +86,7 @@
             </div>
             <div class="col-4 col-lg-2">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-heal-paralyze.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-heal-paralyze.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Cura Paralisia</h5>
                         <p class="card-text">¥200</p>
@@ -97,7 +97,7 @@
             </div>
             <div class="col-4 col-lg-2">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-heal-sleep.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-heal-sleep.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Cura Sono</h5>
                         <p class="card-text">¥250</p>
@@ -109,7 +109,7 @@
 
             <div class="col-4 col-lg-2">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-heal-burn.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-heal-burn.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Cura Queimadura</h5>
                         <p class="card-text">¥250</p>
@@ -120,7 +120,7 @@
             </div>
             <div class="col-4 col-lg-2">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-heal-ice.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-heal-ice.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Cura Gelo</h5>
                         <p class="card-text">¥250</p>
@@ -131,7 +131,7 @@
             </div>
             <div class="col-4 col-lg-2">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-heal-full.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-heal-full.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Cura Completa</h5>
                         <p class="card-text">¥600</p>
@@ -144,7 +144,7 @@
             <!-- poções -->
             <div class="col-3 col-lg-3">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-potion.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-potion.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Poção</h5>
                         <p class="card-text">¥300</p>
@@ -155,7 +155,7 @@
             </div>
             <div class="col-3 col-lg-3">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-potion-super.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-potion-super.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Super Poção</h5>
                         <p class="card-text">¥700</p>
@@ -166,7 +166,7 @@
             </div>
             <div class="col-3 col-lg-3">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-potion-hyper.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-potion-hyper.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Hiper Poção</h5>
                         <p class="card-text">¥1200</p>
@@ -177,7 +177,7 @@
             </div>
             <div class="col-3 col-lg-3">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-potion-max.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-potion-max.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Poção Máxima</h5>
                         <p class="card-text">¥2500</p>
@@ -190,7 +190,7 @@
             <!-- repel e revive -->
             <div class="col-3 col-lg-3">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-revive.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-revive.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Reviver</h5>
                         <p class="card-text">¥1500</p>
@@ -201,7 +201,7 @@
             </div>
             <div class="col-3 col-lg-3">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-repel.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-repel.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Repelente</h5>
                         <p class="card-text">¥350</p>
@@ -212,7 +212,7 @@
             </div>
             <div class="col-3 col-lg-3">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-repel-super.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-repel-super.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Super Repelente</h5>
                         <p class="card-text">¥500</p>
@@ -223,7 +223,7 @@
             </div>
             <div class="col-3 col-lg-3">
                 <div class="card mt-4 mb-4" style="width: auto;">
-                    <img class="card-img-top" src="../img/item-repel-max.png" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/item-repel-max.png" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title font-weight-bold">Repelente Máximo</h5>
                         <p class="card-text">¥700</p>
@@ -236,4 +236,4 @@
     </div>
 
     <br>
-<?php include "./footer.php";?>
+<?php include "footer.php";?>

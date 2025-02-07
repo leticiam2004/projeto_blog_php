@@ -1,4 +1,4 @@
-<?php include "./header.php";?>
+<?php include "header.php";?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
@@ -40,7 +40,7 @@
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="card" style="width: 100%;">
-                    <img class="card-img-top" src="../img/PM-GEN1.jpg" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/PM-GEN1.jpg" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title">Primeira geração - 1996</h5>
                         <p class="card-text">O clássico Poké Mart de Viridian City, onde tudo começou. Uma parada
@@ -50,7 +50,7 @@
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card" style="width: 100%;">
-                    <img class="card-img-top" src="../img/PM-GEN2.jpg" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/PM-GEN2.jpg" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title">Segunda geração (Kanto) - 1999</h5>
                         <p class="card-text">Com novos itens e surpresas, esta loja é um ponto de encontro popular para
@@ -60,7 +60,7 @@
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card" style="width: 100%;">
-                    <img class="card-img-top" src="../img/PM-GEN2_1.jpg" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/PM-GEN2_1.jpg" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title">Segunda geração (Johto) - 1999</h5>
                         <p class="card-text">Bem-vindo ao Johto! Este Poké Mart oferece produtos de última geração para
@@ -70,7 +70,7 @@
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card" style="width: 100%;">
-                    <img class="card-img-top" src="../img/PM-GEN3.jpg" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/PM-GEN3.jpg" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title">Terceira geração (Hoenn) - 2002</h5>
                         <p class="card-text">Em Hoenn, a Poké Mart tem tudo que você precisa para enfrentar as condições
@@ -80,7 +80,7 @@
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card" style="width: 100%;">
-                    <img class="card-img-top" src="../img/PM-GEN3_1.jpg" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/PM-GEN3_1.jpg" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title">Terceira geração (Kanto) - 2002</h5>
                         <p class="card-text">Uma Poké Mart renovada em Kanto, trazendo itens exclusivos para os
@@ -90,7 +90,7 @@
             </div>
             <div class="col-md-4 mb-4">
                 <div class="card" style="width: 100%;">
-                    <img class="card-img-top" src="../img/PM-GEN4.jpg" alt="Imagem de capa do card">
+                    <img class="card-img-top" src="img/PM-GEN4.jpg" alt="Imagem de capa do card">
                     <div class="card-body">
                         <h5 class="card-title">Quarta geração - 2006</h5>
                         <p class="card-text">Explore Sinnoh com os melhores suprimentos! Este Poké Mart está sempre
@@ -101,4 +101,4 @@
         </div>
     </div>
     <br>
-<?php include "./footer.php";?>
+<?php include "footer.php";?>
