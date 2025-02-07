@@ -70,7 +70,7 @@
             <a href="#" class="btn" style="background-color: #30A7D6; color: white;" onclick="AlertaEnviar()">Enviar</a>
         </form>
     </div>
-    <br><br>''
+    <br><br>
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">Nossa localização</h1>
@@ -79,7 +79,7 @@
                 src="https://www.openstreetmap.org/export/embed.html?bbox=139.69768255949023%2C35.66131267755379%2C139.69962716102603%2C35.66253521852611&amp;layer=mapnik"
                 style="border: 1px solid black">
             </iframe>
-            <br />
+            <br/>
             <small>
                 <a target="_blank" href="https://www.openstreetmap.org/#map=19/35.661924/139.698655">Ver mapa maior</a>
             </small>

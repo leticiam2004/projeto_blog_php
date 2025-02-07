@@ -24,10 +24,7 @@
             </nav>
         </div>
     </header>
-    <br>
-    <br>
-    <br>
-    <br>
+
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">Catálogo</h1>
@@ -235,5 +232,4 @@
         </div>
     </div>
 
-    <br>
 <?php include "footer.php";?>
