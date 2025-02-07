@@ -1,0 +1,28 @@
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#logo {
+    height: 60px;
+    transition: transform 0.3s;
+}
+
+#logo:hover {
+    transform: scale(1.1);
+}
+
+.carousel-control-prev-icon .blk,
+.carousel-control-next-icon .blk {
+    background-color: black;
+    border-radius: 50%;
+}
+
+.carousel-control-prev .blk,
+.carousel-control-next .blk {
+    filter: invert(100%);
+}
+
+.h-80vh {
+    height: 80vh;
+    object-fit: cover;
+  } 

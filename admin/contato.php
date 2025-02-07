@@ -19,13 +19,13 @@
                             <a class="nav-link font-weight-bold" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link font-weight-bold" href="paginas/sobre.php">Sobre nós</a>
+                            <a class="nav-link font-weight-bold" href="sobre.php">Sobre nós</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link font-weight-bold" href="paginas/produtos.php">Loja</a>
+                            <a class="nav-link font-weight-bold" href="produtos.php">Loja</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link font-weight-bold" href="paginas/contato.php">Contato<span class="sr-only">(Página
+                            <a class="nav-link font-weight-bold" href="contato.php">Contato<span class="sr-only">(Página
                                     atual)</span></a>
                         </li>
                     </ul>

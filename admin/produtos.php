@@ -10,14 +10,14 @@
                             <a class="nav-link font-weight-bold" href="index.php">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link font-weight-bold" href="paginas/sobre.php">Sobre nós</a>
+                            <a class="nav-link font-weight-bold" href="sobre.php">Sobre nós</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link font-weight-bold" href="paginas/produtos.php">Loja<span class="sr-only">(Página
+                            <a class="nav-link font-weight-bold" href="produtos.php">Loja<span class="sr-only">(Página
                                     atual)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link font-weight-bold" href="paginas/contato.php">Contato</a>
+                            <a class="nav-link font-weight-bold" href="contato.php">Contato</a>
                         </li>
                     </ul>
                 </div>
