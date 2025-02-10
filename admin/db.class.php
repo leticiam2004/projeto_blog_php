@@ -52,11 +52,11 @@ class db
         }
         $sql .= ") VALUES (";
         $flag = 0;
-        
+
         foreach ($data as $campo => $valor) {
             $sql .= $flag == 0 ? "?" : ",?";
             $flag = 1;
-            $array_values[] = $valor; 
+            $array_values[] = $valor;
         }
         $sql .= ")";
 
@@ -106,7 +106,7 @@ class db
         return $stmt->fetchALL(PDO::FETCH_CLASS);
 
     }
-    public function find($id,$table_name=null)
+    public function find($id, $table_name = null)
     {
         $conn = $this->conn();
         $table_name = !empty($table_name) ? $table_name : $this->table_name;
@@ -125,7 +125,5 @@ class db
         $sql = "DELETE FROM $this->table_name WHERE id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$id]);
-
-
     }
 }

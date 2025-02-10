@@ -1,5 +1,5 @@
 <?php include "header.php"; ?>
-<?php include "db.connect.php"; ?>
+<?php include "admin/db.connect.php"; ?>
 <?php
 
 if (isset($_GET['test_message']) && $_GET['test_message'] == 'true') {
@@ -13,11 +13,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome_completo = $_POST['nome'];
     $email = $_POST['email'];
     $assunto = $_POST['assunto'];
-    $situacao = $_POST['situacao'];
+    $problema = $_POST['problema'];
 
     // preparar query 
 
-    $sql = "INSERT INTO contato (nome_completo, email, assunto, situacao) VALUES ('$nome_completo', '$email', '$assunto', '$situacao')";
+    $sql = "INSERT INTO contato (nome_completo, email, assunto, problema) VALUES ('$nome_completo', '$email', '$assunto', '$problema')";
 
     // inserir query
 
@@ -34,28 +34,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 ?>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item ">
-                <a class="nav-link font-weight-bold" href="index.php">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="sobre.php">Sobre nós</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link font-weight-bold" href="produtos.php">Loja</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link font-weight-bold" href="contato.php">Contato<span class="sr-only">(Página
-                        atual)</span></a>
-            </li>
-        </ul>
-    </div>
+
+<div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+        <li class="nav-item ">
+            <a class="nav-link font-weight-bold" href="index.php">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="user_sobre.php">Sobre nós</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="user_produtos.php">Loja</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link font-weight-bold" href="user_contato.php">Contato<span class="sr-only">(Página
+                    atual)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link font-weight-bold" href="login.php">Login</a>
+        </li>
+    </ul>
+</div>
 </nav>
 </div>
 </header>
@@ -88,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Por favor, descreva sua situação</label>
-            <textarea class="form-control" id="situacao" name="situacao" rows="3"></textarea>
+            <textarea class="form-control" id="problema" name="problema" rows="3"></textarea>
         </div>
 
         <button type="submit" class="btn" style="background-color: #30A7D6; color: white;">Enviar</button>
