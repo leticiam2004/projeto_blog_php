@@ -1,10 +1,6 @@
 <?php include "admin/db.connect.php"; ?>
 <?php
 
-// if (isset($_GET['test_message']) && $_GET['test_message'] == 'true') {
-//     $message = "Mensagem de teste: Dados enviados com sucesso!";
-// }
-
 function validateEmptyFields($username, $email, $password)
 {
     if (empty($username) || empty($email) || empty($password)) {
@@ -48,10 +44,10 @@ function checkEmailExists($email, $conn)
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        return true; // E-mail já existe
+        return true; // email já existe
     }
 
-    return false; // E-mail não existe
+    return false; // email não existe
 }
 
 $message = "";
@@ -71,34 +67,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
 
-        // Validar campos vazios 
+        // validar campos vazios 
         if ($emptyError = validateEmptyFields($username, $email, $password)) {
             $errors[] = $emptyError['message'];
         }
 
-        // Validar nome de usuário
+        // validar nome de usuário
         if (!is_null($usernameError = validateUsername($username))) {
             $errors[] = $usernameError['message'];
         }
 
-        // Validar email
+        // validar email
         if (!is_null($emailError = validateEmail($email))) {
             $errors[] = $emailError['message'];
         }
 
-        // Validar senha
+        // validar senha
         if (!is_null($passwordError = validatePassword($password, $confirmPassword))) {
             $errors[] = $passwordError['message'];
         }
 
-        // Verificar se o email já está cadastrado
+        // verificar se o email já está cadastrado
         if (checkEmailExists($email, $conn)) {
             $errors[] = "Este e-mail já está cadastrado!";
         }
 
         if (empty($errors)) {
 
-            // hash the password
+            // hash a senha
             $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
             // preparar query 

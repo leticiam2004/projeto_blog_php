@@ -1,9 +1,8 @@
 <?php
-session_start(); // Inicie a sessão
-session_unset(); // Limpa todas as variáveis de sessão
-session_destroy(); // Destroi a sessão
+session_start(); 
+session_unset(); 
+session_destroy(); 
 
-// Redireciona o usuário para a página de login
 header("Location: login.php");
 exit();
 ?>

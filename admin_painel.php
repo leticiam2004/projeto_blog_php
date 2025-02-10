@@ -4,7 +4,7 @@
 <div class="container mt-5 mb-5">
     <h2 class="mb-4">Painel de Administração</h2>
 
-    <!-- Menu de navegação -->
+    <!-- menu de navegação -->
     <ul class="list-group">
         <li class="list-group-item">
             <a href="users.php" class="text-decoration-none">Gerenciar Usuários</a>

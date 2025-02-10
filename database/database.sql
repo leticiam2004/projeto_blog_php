@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `contato` (
   `nome_completo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `assunto` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  `situacao` varchar(50) NOT NULL DEFAULT '''Novo''',
+  `situacao` varchar(50) NOT NULL DEFAULT ''Novo'',
   `problema` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;

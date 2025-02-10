@@ -50,65 +50,70 @@ $sql = "SELECT * FROM contato";
 $result = $conn->query($sql);
 ?>
 
-<!-- Tabela com os tickets -->
-<h2 class="mt-4">Lista de Tickets</h2>
-<?php if ($result->num_rows > 0): ?>
-    <table class="table table-striped table-bordered table-hover">
-        <thead class="thead-dark">
-            <tr>
-                <th>ID</th>
-                <th>Nome Completo</th>
-                <th>Email</th>
-                <th>Assunto</th>
-                <th>Situação</th>
-                <th>Problema</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($row = $result->fetch_assoc()): ?>
+<!-- Centralizando o conteúdo em um container -->
+<div class="container" style="width: 80vw;">
+
+    <!-- Tabela com os tickets -->
+    <h2 class="mt-4">Lista de Tickets</h2>
+    <?php if ($result->num_rows > 0): ?>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
                 <tr>
-                    <td><?= $row['id']; ?></td>
-                    <td><?= $row['nome_completo']; ?></td>
-                    <td><?= $row['email']; ?></td>
-                    <td><?= $row['assunto']; ?></td>
-                    <td><?= $row['situacao']; ?></td>
-                    <td><?= $row['problema']; ?></td>
-                    <td>
-                        <a href="contatos.php?action=edit&id=<?= $row['id']; ?>" class="btn btn-warning btn-sm">Editar</a>
-                        <a href="contatos.php?action=delete&id=<?= $row['id']; ?>" class="btn btn-danger btn-sm">Deletar</a>
-                    </td>
+                    <th>ID</th>
+                    <th>Nome Completo</th>
+                    <th>Email</th>
+                    <th>Assunto</th>
+                    <th>Situação</th>
+                    <th>Problema</th>
+                    <th>Ações</th>
                 </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
-<?php else: ?>
-    <p>Nenhum contato encontrado.</p>
-<?php endif; ?>
+            </thead>
+            <tbody>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?= $row['id']; ?></td>
+                        <td><?= $row['nome_completo']; ?></td>
+                        <td><?= $row['email']; ?></td>
+                        <td><?= $row['assunto']; ?></td>
+                        <td><?= $row['situacao']; ?></td>
+                        <td style="white-space: normal; word-wrap: break-word; overflow-wrap: break-word;"><?= $row['problema']; ?></td>
+                        <td>
+                            <a href="contatos.php?action=edit&id=<?= $row['id']; ?>" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="contatos.php?action=delete&id=<?= $row['id']; ?>" class="btn btn-danger btn-sm">Deletar</a>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <p>Nenhum contato encontrado.</p>
+    <?php endif; ?>
 
-<!-- Formulário de Edição -->
-<?php if (isset($_GET['action']) && $_GET['action'] == 'edit' && isset($contact)): ?>
-    <h3>Editar Situação do Contato</h3>
-    <form action="contatos.php" method="POST">
-        <input type="hidden" name="id" value="<?= $contact['id']; ?>">
+    <!-- Formulário de Edição -->
+    <?php if (isset($_GET['action']) && $_GET['action'] == 'edit' && isset($contact)): ?>
+        <h3>Editar Situação do Contato</h3>
+        <form action="contatos.php" method="POST">
+            <input type="hidden" name="id" value="<?= $contact['id']; ?>">
 
-        <!-- O Nome e Email não são mais editáveis, somente a Situação -->
-        <div class="form-group">
-            <label for="assunto">Assunto:</label>
-            <input type="text" class="form-control" id="assunto" name="assunto" value="<?= $contact['assunto']; ?>"
-                disabled>
-        </div>
+            <!-- O Nome e Email não são mais editáveis, somente a Situação -->
+            <div class="form-group">
+                <label for="assunto">Assunto:</label>
+                <input type="text" class="form-control" id="assunto" name="assunto" value="<?= $contact['assunto']; ?>"
+                    disabled>
+            </div>
 
-        <div class="form-group">
-            <label for="situacao">Situação:</label>
-            <select class="form-control" id="situacao" name="situacao" required>
-                <option value="Novo" <?= (isset($contact['situacao']) && $contact['situacao'] == 'Novo') ? 'selected' : ''; ?>>
-                    Novo</option>
-                <option value="Em andamento" <?= (isset($contact['situacao']) && $contact['situacao'] == 'Em andamento') ? 'selected' : ''; ?>>Em Andamento</option>
-                <option value="Resolvido" <?= (isset($contact['situacao']) && $contact['situacao'] == 'Resolvido') ? 'selected' : ''; ?>>Resolvido</option>
-            </select>
-        </div>
+            <div class="form-group">
+                <label for="situacao">Situação:</label>
+                <select class="form-control" id="situacao" name="situacao" required>
+                    <option value="Novo" <?= (isset($contact['situacao']) && $contact['situacao'] == 'Novo') ? 'selected' : ''; ?>>
+                        Novo</option>
+                    <option value="Em andamento" <?= (isset($contact['situacao']) && $contact['situacao'] == 'Em andamento') ? 'selected' : ''; ?>>Em Andamento</option>
+                    <option value="Resolvido" <?= (isset($contact['situacao']) && $contact['situacao'] == 'Resolvido') ? 'selected' : ''; ?>>Resolvido</option>
+                </select>
+            </div>
 
-        <button type="submit" class="btn btn-success mb-4" name="edit_contact">Salvar Alterações</button>
-    </form>
-<?php endif; ?>
+            <button type="submit" class="btn btn-success mb-4" name="edit_contact">Salvar Alterações</button>
+        </form>
+    <?php endif; ?>
+</div>
+

@@ -3,7 +3,7 @@ include "admin/db.connect.php";
 include "header.php";
 
 
-// Fetch products
+// fetch
 $sql = "SELECT * FROM produtos";
 $products = $conn->query($sql);
 ?>
@@ -16,7 +16,8 @@ $products = $conn->query($sql);
 
 </div>
 <div class="container">
-    <div class="row row-cols-2 row-cols-lg-3 mx-auto">
+<div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 mx-auto">
+
         <?php foreach ($products as $product): ?>
             <div class="col">
                 <div class="card mt-4 mb-4" style="width: auto;">

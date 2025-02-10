@@ -8,7 +8,6 @@ if (isset($_SESSION['message'])) {
     unset($_SESSION['message']);
 }
 
-// Se estiver editando um produto, busca os dados do produto
 if (isset($_GET['action']) && $_GET['action'] == 'edit' && isset($_GET['id'])) {
     $id = $_GET['id'];
     $query = "SELECT * FROM produtos WHERE id = $id";
@@ -17,7 +16,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'edit' && isset($_GET['id'])) {
 }
 ?>
 
-<!-- Formulário para adicionar ou editar produto -->
+<!-- form para adicionar/editar produto -->
 <?php if (isset($_GET['action']) && ($_GET['action'] == 'add' || $_GET['action'] == 'edit')): ?>
     <div class="container mt-3">
         <h1><?= isset($produto) ? 'Editar Produto' : 'Adicionar Produto' ?></h1>
@@ -52,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (!empty($name) && !empty($price) && !empty($image)) {
         if ($id) {
-            // Atualizar produto existente
+            // atualiza produto
             $sql = "UPDATE produtos SET nome='$name', preco='$price', image='$image' WHERE id=$id";
             if (mysqli_query($conn, $sql)) {
                 $_SESSION['message'] = '<div class="alert alert-success">Produto atualizado com sucesso!</div>';
@@ -60,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo "Erro ao atualizar produto: " . mysqli_error($conn);
             }
         } else {
-            // Adicionar novo produto
+            // add novo produto
             $sql = "INSERT INTO produtos (nome, preco, image) VALUES ('$name', '$price', '$image')";
             if (mysqli_query($conn, $sql)) {
                 $_SESSION['message'] = '<div class="alert alert-success">Produto adicionado com sucesso!</div>';
@@ -75,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Exibir todos os produtos
+// exibe todos os produtos
 $sql = "SELECT * FROM produtos";
 $result = mysqli_query($conn, $sql);
 if (mysqli_num_rows($result) > 0) {
@@ -89,7 +88,7 @@ if (mysqli_num_rows($result) > 0) {
         echo '<h5 class="card-title font-weight-bold">' . htmlspecialchars($row['nome']) . '</h5>';
         echo '<p class="card-text">¥' . htmlspecialchars($row['preco']) . '</p>';
         echo '<a href="produtos.php?action=edit&id=' . htmlspecialchars($row['id']) . '" class="btn btn-warning btn-sm mr-2">Editar</a>';
-        echo '<a href="produtos.php?action=delete&id=' . htmlspecialchars($row['id']) . '" class="btn btn-danger btn-sm">Excluir</a>';
+        echo '<a href="produtos.php?action=delete&id=' . htmlspecialchars($row['id']) . '" class="btn btn-danger btn-sm" onclick="return confirmDelete()">Excluir</a>';
         echo '</div>';
         echo '</div>';
         echo '</div>';
@@ -100,7 +99,7 @@ if (mysqli_num_rows($result) > 0) {
     echo "Nenhum produto encontrado.";
 }
 
-// Excluir produto
+// excluir produto
 if (isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'delete') {
     $id = $_GET['id'];
     $stmt = $conn->prepare("DELETE FROM produtos WHERE id = ?");
@@ -117,3 +116,8 @@ if (isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'delete')
 }
 ?>
 </div>
+<script>
+    function confirmDelete() {
+        return confirm("Tem certeza que deseja excluir este produto?");
+    }
+</script>
