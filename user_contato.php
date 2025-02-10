@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <div class="collapse navbar-collapse" id="navbarNav">
+    
     <ul class="navbar-nav">
         <li class="nav-item ">
             <a class="nav-link font-weight-bold" href="index.php">Home</a>
@@ -60,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </header>
 
 <div class="container mt-4 mb-5">
-
+<h1>Entre em contato!</h1>
     <form method="POST">
         <div class="form-group">
             <label for="exampleFormControlInput1">Nome completo</label>
