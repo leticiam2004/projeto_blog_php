@@ -16,6 +16,12 @@ $products = $conn->query($sql);
 
 </div>
 <div class="container">
+<form action="./postList.php" method="post">
+    <div class="btn-group">
+        <input class="form-control" type="text" name="val">
+        <button class="btn btn-success" type="submit">Buscar</button>
+    </div>
+    </form>
 <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 mx-auto">
 
         <?php foreach ($products as $product): ?>
