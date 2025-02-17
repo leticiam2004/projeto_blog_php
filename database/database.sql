@@ -25,15 +25,16 @@ CREATE TABLE IF NOT EXISTS `contato` (
   `nome_completo` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `assunto` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
-  `situacao` varchar(50) NOT NULL DEFAULT ''Novo'',
-  `problema` text NOT NULL,
+  `situacao` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT 'Novo',
+  `problema` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
 -- Dumping data for table database.contato: ~3 rows (approximately)
 INSERT INTO `contato` (`id`, `nome_completo`, `email`, `assunto`, `situacao`, `problema`) VALUES
-	(1, 'alejandro', 'alejandro_castellano@hotmail.com', 'resolvido', 'Novo', ''),
-	(2, 'alejandro', 'alejandro_castellano@hotmail.com', 'adsafcsargavsdfgcrs ayudaaaaaaaaa', 'Resolvido', '');
+	(6, 'Ash Ketchum', 'ash@pallet.com', 'Questões sobre entrega', 'Novo', 'Estou aguardando a entrega de 10 Pokébolas e 5 Poções para uma missão urgente em Johto. Já passaram 5 dias e ainda não recebi nenhuma atualização sobre o status do pedido. Poderiam verificar, por favor?'),
+	(7, 'Misty Waterflower', 'misty@cerulean.com', 'Sugestões de novos produtos', 'Novo', 'Seria incrível se vocês pudessem adicionar itens específicos para treinadores de Pokémon de água, como Poções especiais para recuperação rápida após batalhas subaquáticas. Isso ajudaria muito em treinamentos intensos!'),
+	(8, 'Brock Harrison', 'brock@pewtergym.com', 'Suporte técnico', 'Novo', 'Comprei uma Pokébola personalizada, mas ela parece estar com defeito, pois não está funcionando corretamente ao tentar capturar Pokémon. Vocês poderiam me orientar sobre o que fazer ou trocar o item?');
 
 -- Dumping structure for table database.produtos
 CREATE TABLE IF NOT EXISTS `produtos` (
@@ -44,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `produtos` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
--- Dumping data for table database.produtos: ~18 rows (approximately)
+-- Dumping data for table database.produtos: ~17 rows (approximately)
 INSERT INTO `produtos` (`id`, `nome`, `preco`, `image`) VALUES
 	(1, 'Pokéball', 200, 'https://iili.io/2b9Lvqu.png'),
 	(2, 'GreatBall', 600, 'https://iili.io/2b9LSgj.png'),
@@ -62,8 +63,7 @@ INSERT INTO `produtos` (`id`, `nome`, `preco`, `image`) VALUES
 	(14, 'Repelente', 350, 'https://iili.io/2b9LDrJ.png'),
 	(15, 'Super Repelente', 500, 'https://iili.io/2b9Lp7R.png'),
 	(16, 'Max Repelente', 700, 'https://iili.io/2b9Lmdv.png'),
-	(17, 'Reviver', 1500, 'https://iili.io/2b9Lyep.png'),
-	(41, 'alejandro', 55765, 'https://upload.wikimedia.org/wikipedia/commons/5/51/Pokebola-pokeball-png-0.png');
+	(17, 'Reviver', 1500, 'https://iili.io/2b9Lyep.png');
 
 -- Dumping structure for table database.users
 CREATE TABLE IF NOT EXISTS `users` (
@@ -73,11 +73,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(250) NOT NULL DEFAULT '0',
   `admin` tinyint(4) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=armscii8 COLLATE=armscii8_bin;
 
--- Dumping data for table database.users: ~2 rows (approximately)
+-- Dumping data for table database.users: ~4 rows (approximately)
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `admin`) VALUES
-	(10, 'Darkian', 'alejandro_castellano@hotmail.com', '$2y$10$VYQ9FD33MjfGrZkZ6NKHM.3A1bLwqOOjFa5q8Go/QHcU7wi.e6wby', 1);
+	(13, 'admin', 'admin@admin.com', '$2y$10$Yeiq48lwUcVjAu/.yaDnxOI27TF.hnxV/P..S.M37rUgiPNY7MI4e', 1),
+	(14, 'ash', 'ash@pallet.com', '$2y$10$Gt3BbNfSiKc4.h7ePYwg2ukw1p.gLN.XY90UJ3Q79G7kspFYz3AlS', 0),
+	(15, 'misty', 'misty@cerulean.com', '$2y$10$hCHjY4k3KmoI1w.oUl9khuaNo1/r4QpFKcI9McHKqQuFgetvhVlDe', 0),
+	(16, 'brock', 'brock@pewtergym.com', '$2y$10$H6aDonXkOWFXkF7Z2kcgVOuyKbtPmuGPz.SsUwAnCa1vk3dz20tUu', 0);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

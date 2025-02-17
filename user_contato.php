@@ -65,15 +65,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <form method="POST">
         <div class="form-group">
             <label for="exampleFormControlInput1">Nome completo</label>
-            <input type="name" class="form-control" id="nome" name="nome" placeholder="Jessie Rocket">
+            <input type="name" class="form-control" id="nome" name="nome" placeholder="Jessie Rocket" required>
         </div>
         <div class="form-group">
             <label for="exampleFormControlInput1">Endereço de email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="nome@exemplo.com">
+            <input type="email" class="form-control" id="email" name="email" placeholder="nome@exemplo.com" required>
         </div>
         <div class="form-group">
             <label for="exampleFormControlSelect1">Assunto</label>
-            <select class="form-control" id="assunto" name="assunto">
+            <select class="form-control" id="assunto" name="assunto" required>
                 <option>Dúvidas sobre produtos</option>
                 <option>Problemas com o pedido</option>
                 <option>Sugestões de novos produtos</option>
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Por favor, descreva sua situação</label>
-            <textarea class="form-control" id="problema" name="problema" rows="3"></textarea>
+            <textarea class="form-control" id="problema" name="problema" rows="3" required></textarea>
         </div>
 
         <button type="submit" class="btn" style="background-color: #30A7D6; color: white;">Enviar</button>
