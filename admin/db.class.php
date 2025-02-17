@@ -8,7 +8,7 @@ class db
     private $password = "";
     private $port = "3306";
     private $table_name;
-    private $dbname = "db_pweb1_2024_2_blog";
+    private $dbname = "database";
 
     public function __construct($table_name)
     {

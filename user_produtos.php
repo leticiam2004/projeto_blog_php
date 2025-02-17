@@ -1,12 +1,25 @@
 <?php
 include "admin/db.connect.php";
+include "admin/db.class.php";
 include "header.php";
 
 
 // fetch
-$sql = "SELECT * FROM produtos";
-$products = $conn->query($sql);
+$db = new db('produtos');
+$products = $db->all();
+
+if(!empty($_GET["id"])){
+    $db->destroy($_GET["id"]);
+    header("location: user_produtos.php");
+}
+if(!empty(($_POST))){
+    $products = $db->filter($_POST);
+}else{
+    $products = $db->all();
+}
+var_dump($products)
 ?>
+
 
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
@@ -16,9 +29,12 @@ $products = $conn->query($sql);
 
 </div>
 <div class="container">
-<form action="./postList.php" method="post">
+<form action="user_produtos.php" method="post">
     <div class="btn-group">
-        <input class="form-control" type="text" name="val">
+    <select class="form-select" name="tipo" id="">
+            <option value="nome">Nome</option>
+        </select>
+        <input class="form-control" type="text" name="valor">
         <button class="btn btn-success" type="submit">Buscar</button>
     </div>
     </form>
