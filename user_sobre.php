@@ -1,14 +1,15 @@
-<?php include "admin/db.class.php";
-include "header.php";
+<?php
+include "admin/db.class.php"; // inclui a classe de conexão com o banco de dados
+include "header.php"; // inclui o cabeçalho com o bootstrap
 
+// inicializa a conexão com a tabela 'users'
 $db = new db('users');
-$db->checkLogin();
+$db->checkLogin(); // verifica se o usuário está logado
 ?>
-
 
 <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-        <li class="nav-item ">
+        <li class="nav-item">
             <a class="nav-link font-weight-bold" href="index.php">Home</a>
         </li>
         <li class="nav-item active">
@@ -29,29 +30,33 @@ $db->checkLogin();
 </nav>
 </div>
 </header>
+
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <h1 class="display-4">Nossa história</h1>
-        <p class="lead">A PokéMart é um lugar onde você pode comprar itens para seus Pokémon. Há pessoas com
-            quem conversar que podem dar dicas sobre alguns dos itens. Este prédio pode ser encontrado em quase
-            todas as cidades e vilas, com exceção de cidades como Goldenrod ou Celadon, que têm uma Loja
-            de Departamentos em vez de uma PokéMart. As PokéMarts são administradas pela Silph Co. Desde Pokémon
-            Black and White, a PokéMart foi integrada ao Centro Pokémon.</p>
+        <p class="lead">A PokéMart é um lugar onde você pode comprar itens para seus Pokémon. Há pessoas com quem
+            conversar que podem dar dicas sobre alguns dos itens. Este prédio pode ser encontrado em quase todas as
+            cidades e vilas, com exceção de cidades como Goldenrod ou Celadon, que têm uma Loja de Departamentos em vez
+            de uma PokéMart. As PokéMarts são administradas pela Silph Co. Desde Pokémon Black and White, a PokéMart foi
+            integrada ao Centro Pokémon.</p>
     </div>
 </div>
 
 <div class="container">
     <div class="row">
+        <!-- Primeira geração - 1996 -->
         <div class="col-md-4 mb-4">
             <div class="card" style="width: 100%;">
                 <img class="card-img-top" src="https://iili.io/2b9QJII.jpg" alt="PM GEN1">
                 <div class="card-body">
                     <h5 class="card-title">Primeira geração - 1996</h5>
-                    <p class="card-text">O clássico Poké Mart de Viridian City, onde tudo começou. Uma parada
-                        essencial para novos treinadores em sua jornada</p>
+                    <p class="card-text">O clássico Poké Mart de Viridian City, onde tudo começou. Uma parada essencial
+                        para novos treinadores em sua jornada.</p>
                 </div>
             </div>
         </div>
+
+        <!-- Segunda geração (Kanto) - 1999 -->
         <div class="col-md-4 mb-4">
             <div class="card" style="width: 100%;">
                 <img class="card-img-top" src="https://iili.io/2b9QdXt.jpg" alt="PM GEN2">
@@ -62,16 +67,20 @@ $db->checkLogin();
                 </div>
             </div>
         </div>
+
+        <!-- Segunda geração (Johto) - 1999 -->
         <div class="col-md-4 mb-4">
             <div class="card" style="width: 100%;">
                 <img class="card-img-top" src="https://iili.io/2b9Q2LX.jpg" alt="PM GEN2 1">
                 <div class="card-body">
                     <h5 class="card-title">Segunda geração (Johto) - 1999</h5>
-                    <p class="card-text">Bem-vindo ao Johto! Este Poké Mart oferece produtos de última geração para
-                        sua aventura regional.</p>
+                    <p class="card-text">Bem-vindo ao Johto! Este Poké Mart oferece produtos de última geração para sua
+                        aventura regional.</p>
                 </div>
             </div>
         </div>
+
+        <!-- Terceira geração (Hoenn) - 2002 -->
         <div class="col-md-4 mb-4">
             <div class="card" style="width: 100%;">
                 <img class="card-img-top" src="https://iili.io/2b9QK1s.jpg" alt="PM GEN3">
@@ -82,26 +91,31 @@ $db->checkLogin();
                 </div>
             </div>
         </div>
+
+        <!-- Terceira geração (Kanto) - 2002 -->
         <div class="col-md-4 mb-4">
             <div class="card" style="width: 100%;">
                 <img class="card-img-top" src="https://iili.io/2b9QfrG.jpg" alt="PM GEN3 1">
                 <div class="card-body">
                     <h5 class="card-title">Terceira geração (Kanto) - 2002</h5>
-                    <p class="card-text">Uma Poké Mart renovada em Kanto, trazendo itens exclusivos para os
-                        treinadores mais dedicados.</p>
+                    <p class="card-text">Uma Poké Mart renovada em Kanto, trazendo itens exclusivos para os treinadores
+                        mais dedicados.</p>
                 </div>
             </div>
         </div>
+
+        <!-- Quarta geração - 2006 -->
         <div class="col-md-4 mb-4">
             <div class="card" style="width: 100%;">
                 <img class="card-img-top" src="https://iili.io/2b9QB2f.jpg" alt="PM GEN4">
                 <div class="card-body">
                     <h5 class="card-title">Quarta geração - 2006</h5>
-                    <p class="card-text">Explore Sinnoh com os melhores suprimentos! Este Poké Mart está sempre
-                        pronto para ajudar em sua jornada épica.</p>
+                    <p class="card-text">Explore Sinnoh com os melhores suprimentos! Este Poké Mart está sempre pronto
+                        para ajudar em sua jornada épica.</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<?php include "footer.php"; ?>
+
+<?php include "footer.php"; // inclui o rodapé ?>

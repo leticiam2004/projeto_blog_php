@@ -44,12 +44,10 @@
 
 
                         <?php if (isset($_SESSION['user_id'])): ?>
-                            <!-- Show the Logout link if the user is logged in -->
                             <li class="nav-item">
                                 <a class="nav-link font-weight-bold" href="logout.php">Logout</a>
                             </li>
 
-                            <!-- Check if the user is an admin -->
                             <?php if ($_SESSION['admin'] == true): ?>
                                 <li class="nav-item">
                                     <a class="nav-link font-weight-bold" href="admin_painel.php">Painel Admin</a>
@@ -57,7 +55,6 @@
                             <?php endif; ?>
 
                         <?php else: ?>
-                            <!-- Show the Login link if the user is not logged in -->
                             <li class="nav-item">
                                 <a class="nav-link font-weight-bold" href="login.php">Login</a>
                             </li>

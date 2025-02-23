@@ -1,81 +1,80 @@
 <?php
-include "admin/db.class.php"; // Conexão com o banco
-include "header.php"; // Cabeçalho com a inclusão do Bootstrap
+include "admin/db.class.php"; // conecta com o banco de dados
+include "header.php"; // inclui o cabeçalho com bootstrap
 
-// Instancia a classe db e inicializa a conexão
-$db = new db('contato'); // 'contato' é o nome da tabela
-$conn = $db->conn(); // Obtém a conexão
+// cria uma instância da classe db e conecta na tabela 'contato'
+$db = new db('contato');
+$conn = $db->conn(); // pega a conexão ativa
 
-
-// Lógica para editar o contato
+// verifica se o usuário quer editar um contato
 if (isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'edit') {
-    $contactId = $_GET['id'];
-    $stmt = $conn->prepare("SELECT * FROM contato WHERE id = :id");
+    $contactId = $_GET['id']; // pega o id do contato
+    $stmt = $conn->prepare("SELECT * FROM contato WHERE id = :id"); // consulta o contato pelo id
     $stmt->bindParam(':id', $contactId, PDO::PARAM_INT);
     $stmt->execute();
-    $contact = $stmt->fetch(PDO::FETCH_ASSOC);
+    $contact = $stmt->fetch(PDO::FETCH_ASSOC); // armazena o contato
 
-    // Verifica se o contato foi encontrado
+    // se não achar o contato, mostra mensagem e para tudo
     if (!$contact) {
         echo "Contato não encontrado!";
         exit();
     }
 }
 
-// Lógica para salvar as edições do contato
+// salva as alterações feitas em um contato
 if (isset($_POST['edit_contact'])) {
-    $contactId = $_POST['id'];
-    $situacao = $_POST['situacao'];
+    $contactId = $_POST['id']; // pega o id enviado pelo form
+    $situacao = $_POST['situacao']; // pega a nova situação
 
-    // Atualiza a situação no banco de dados
+    // atualiza a situação no banco
     $stmt = $conn->prepare("UPDATE contato SET situacao = :situacao WHERE id = :id");
     $stmt->bindParam(':situacao', $situacao, PDO::PARAM_STR);
     $stmt->bindParam(':id', $contactId, PDO::PARAM_INT);
     $stmt->execute();
 
-    // Redireciona para a página de contatos após a edição
+    // redireciona para a lista de contatos depois de salvar
     header("Location: contatos.php");
     exit();
 }
 
-// lógica para deletar o contato
+// deleta um contato
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
-    $contactId = $_GET['id'];
-    $stmt = $conn->prepare("DELETE FROM contato WHERE id = :id");
+    $contactId = $_GET['id']; // pega o id do contato
+    $stmt = $conn->prepare("DELETE FROM contato WHERE id = :id"); // deleta pelo id
     $stmt->bindParam(':id', $contactId, PDO::PARAM_INT);
     $stmt->execute();
 
-    // manda para a página de contatos após a exclusão
+    // redireciona pra página principal após deletar
     header("Location: contatos.php");
     exit();
 }
-// consulta para listar os contatos
+
+// consulta todos os contatos para exibir na tabela
 $stmt = $conn->prepare("SELECT * FROM contato");
 $stmt->execute();
-$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC); // guarda todos os contatos
 
-$search = isset($_POST['search']) ? $_POST['search'] : '';
+$search = isset($_POST['search']) ? $_POST['search'] : ''; // pega a pesquisa, se tiver
 
 if ($search) {
-    // pesquisa usuários pelo nome
+    // pesquisa contatos pelo nome (ignora maiúsculas/minúsculas)
     $stmt = $conn->prepare("SELECT * FROM contato WHERE LOWER(nome_completo) LIKE LOWER(?)");
     $stmt->execute(['%' . $search . '%']);
-    $contato = $stmt->fetchAll(PDO::FETCH_ASSOC); // Guardar os resultados da pesquisa
+    $contato = $stmt->fetchAll(PDO::FETCH_ASSOC); // resultados da pesquisa
 } else {
-    // Se não houver pesquisa, exibe todos os usuários
+    // se não pesquisar, mostra todos os contatos
     $stmt = $conn->query("SELECT * FROM contato");
-    $contato = $stmt->fetchAll(PDO::FETCH_ASSOC); // Guardar os resultados da consulta
+    $contato = $stmt->fetchAll(PDO::FETCH_ASSOC); // resultados padrão
 }
-
 ?>
 
-<!-- Centralizando o conteúdo em um container -->
+<!-- container centralizado -->
 <div class="container" style="width: 80vw;">
 
-    <!-- Tabela com os tickets -->
+    <!-- título da lista -->
     <h2 class="mt-4">Lista de Tickets</h2>
 
-    <!-- Formulário de pesquisa -->
+    <!-- formulário de pesquisa -->
     <form action="contatos.php" method="post" class="mb-4">
         <div class="form-group">
             <input type="text" name="search" class="form-control" placeholder="Pesquisar por nome"
@@ -84,7 +83,7 @@ if ($search) {
         <button type="submit" class="btn" style="background-color: #30A7D6; color: white;">Buscar</button>
     </form>
 
-    <!-- Exibindo a tabela de contatos -->
+    <!-- tabela com os contatos -->
     <?php if (count($contato) > 0): ?>
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
@@ -110,8 +109,10 @@ if ($search) {
                             <?= $row['problema']; ?>
                         </td>
                         <td>
+                            <!-- botão pra editar o contato -->
                             <a href="contatos.php?action=edit&id=<?= $row['id']; ?>" class="btn btn-warning btn-sm mb-2"
                                 style="color: black;">Editar</a>
+                            <!-- botão pra deletar o contato -->
                             <a href="contatos.php?action=delete&id=<?= $row['id']; ?>" class="btn btn-danger btn-sm"
                                 style="color: white;">Deletar</a>
                         </td>
@@ -120,6 +121,7 @@ if ($search) {
             </tbody>
         </table>
     <?php else: ?>
+        <!-- mensagem se não achar nenhum contato -->
         <p>Nenhum contato encontrado.</p>
     <?php endif; ?>
 </div>

@@ -2,43 +2,44 @@
 include "admin/db.class.php"; // conexão com o banco de dados via PDO
 include "header.php"; // importa o cabeçalho, já com bootstrap incluso
 
-// Instancia a classe db e inicializa a conexão
+// instancia a classe db e inicializa a conexão
 $db = new db('contato'); // 'contato' é o nome da tabela
-$db->checkLogin();
-$conn = $db->conn(); // Obtém a conexão
+$db->checkLogin(); // verifica se o usuário está logado
+$conn = $db->conn(); // obtém a conexão com o banco de dados
 
-// Inicializa a variável de mensagem
+// inicializa a variável de mensagem
 $message = "";
 
-// Verifica se o formulário foi enviado
+// verifica se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Obtém os dados do formulário
+    // obtém os dados do formulário
     $nome_completo = $_POST['nome'];
     $email = $_POST['email'];
     $assunto = $_POST['assunto'];
     $problema = $_POST['problema'];
 
-    // Prepara a consulta SQL para inserção de dados
+    // prepara a consulta SQL para inserção de dados
     $sql = "INSERT INTO contato (nome_completo, email, assunto, problema) 
             VALUES (:nome_completo, :email, :assunto, :problema)";
 
     try {
-        // Prepara a declaração SQL
+        // prepara a declaração SQL
         $stmt = $conn->prepare($sql);
 
-        // Associa os parâmetros aos valores
+        // associa os parâmetros aos valores
         $stmt->bindParam(':nome_completo', $nome_completo);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':assunto', $assunto);
         $stmt->bindParam(':problema', $problema);
 
-        // Executa a consulta
+        // executa a consulta
         if ($stmt->execute()) {
-            $message = "Dados enviados com sucesso!";
+            $message = "Dados enviados com sucesso!"; // mensagem de sucesso
         } else {
-            $message = "Erro ao enviar dados.";
+            $message = "Erro ao enviar dados."; // mensagem de erro caso falhe a inserção
         }
     } catch (PDOException $e) {
+        // captura erro de PDO e exibe a mensagem de erro
         $message = "Erro ao enviar dados: " . $e->getMessage();
     }
 }
@@ -48,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <div class="collapse navbar-collapse" id="navbarNav">
 
     <ul class="navbar-nav">
+        <!-- menu de navegação -->
         <li class="nav-item ">
             <a class="nav-link font-weight-bold" href="index.php">Home</a>
         </li>
@@ -72,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <div class="container mt-4 mb-5">
     <h1>Entre em contato!</h1>
+    <!-- formulário de contato -->
     <form method="POST">
         <div class="form-group">
             <label for="exampleFormControlInput1">Nome completo</label>
@@ -84,6 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="form-group">
             <label for="exampleFormControlSelect1">Assunto</label>
             <select class="form-control" id="assunto" name="assunto" required>
+                <!-- opções para assunto -->
                 <option>Dúvidas sobre produtos</option>
                 <option>Problemas com o pedido</option>
                 <option>Sugestões de novos produtos</option>
@@ -94,15 +98,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <option>Cancelamento de pedido</option>
                 <option>Outras questões</option>
             </select>
-
         </div>
         <div class="form-group">
             <label for="exampleFormControlTextarea1">Por favor, descreva sua situação</label>
             <textarea class="form-control" id="problema" name="problema" rows="3" required></textarea>
         </div>
 
+        <!-- botão de envio do formulário -->
         <button type="submit" class="btn" style="background-color: #30A7D6; color: white;">Enviar</button>
 
+        <!-- exibe a mensagem após envio do formulário -->
         <?php if (isset($message) && $message != "") {
             echo "<div class='alert alert-info mt-2'>$message</div>";
         } ?>
@@ -125,4 +130,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 </div>
 
-<?php include "footer.php"; ?>
+<?php include "footer.php"; ?> <!-- inclui o rodapé da página -->

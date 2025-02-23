@@ -1,79 +1,81 @@
 <?php
-include "admin/db.class.php"; // conexão com o banco de dados via PDO
-include "header.php"; // importa o cabeçalho, já com bootstrap incluso
+// Conexão com o banco de dados e inclusão do cabeçalho com Bootstrap
+include "admin/db.class.php";
+include "header.php";
 
+// Inicializa a classe de banco de dados
 $db = new db('users');
-$db->checkLogin();
-$db->checkAdminLogin();
-$conn = $db->conn();
+$db->checkLogin(); // Verifica se o usuário está logado
+$db->checkAdminLogin(); // Verifica se o usuário tem permissão de admin
+$conn = $db->conn(); // Conecta ao banco de dados
 
-// verifica se o formulário de adição foi enviado
+// Verifica se o formulário de adição foi enviado
 if (isset($_POST['add_user'])) {
     $username = $_POST['username'];
     $email = $_POST['email'];
-    $admin = isset($_POST['admin']) ? 1 : 0; // se estiver marcado, define como admin
-    $password = $_POST['password']; // pega a senha do formulário
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // criptografa a senha
-    $telefone = ($_POST['telefone']);
+    $admin = isset($_POST['admin']) ? 1 : 0; // Marca como admin se selecionado
+    $password = $_POST['password']; // Pega a senha informada
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Criptografa a senha
+    $telefone = ($_POST['telefone']); // Pega o telefone
 
-    // insere o novo usuário no banco
+    // Insere o novo usuário no banco de dados
     $stmt = $conn->prepare("INSERT INTO users (username, email, telefone, admin, password) VALUES (?, ?, ?, ?, ?)");
     $stmt->execute([$username, $email, $telefone, $admin, $hashedPassword]);
 
-    // redireciona pra evitar reenvio do formulário
+    // Redireciona para evitar reenvio do formulário
     header("Location: users.php");
     exit();
 }
 
-// verifica se é uma edição
+// Verifica se é uma edição
 if (isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'edit') {
     $userId = $_GET['id'];
     $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
     $stmt->execute([$userId]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC); // Recupera os dados do usuário
 }
 
-// verifica se o formulário de edição foi enviado
+// Verifica se o formulário de edição foi enviado
 if (isset($_POST['edit_user'])) {
     $userId = $_POST['id'];
     $username = $_POST['username'];
     $email = $_POST['email'];
-    $admin = isset($_POST['admin']) ? 1 : 0;
+    $admin = isset($_POST['admin']) ? 1 : 0; // Marca como admin se selecionado
     $password = $_POST['password'];
     $telefone = $_POST['telefone'];
 
-    // busca a senha atual no banco se não houver uma senha nova informada
+    // Se a senha não foi alterada, mantém a senha atual
     if (empty($password)) {
         $stmt = $conn->prepare("SELECT password FROM users WHERE id = ?");
         $stmt->execute([$userId]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        $hashedPassword = $row ? $row['password'] : ''; // mantém a senha antiga
+        $hashedPassword = $row ? $row['password'] : ''; // Mantém a senha atual se não houver nova
     } else {
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT); // Criptografa a nova senha
     }
 
-    // atualiza os dados no banco
+    // Atualiza os dados do usuário no banco de dados
     $stmt = $conn->prepare("UPDATE users SET username = ?, email = ?, telefone = ?, admin = ?, password = ? WHERE id = ?");
     if ($stmt->execute([$username, $email, $telefone, $admin, $hashedPassword, $userId])) {
         header("Location: users.php");
         exit();
     } else {
-        echo "Erro ao atualizar o usuário: " . $stmt->errorInfo()[2];
+        echo "Erro ao atualizar o usuário: " . $stmt->errorInfo()[2]; // Exibe erro caso ocorra
     }
 }
 
-// verifica se é uma exclusão
+// Verifica se é uma exclusão
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
     $userId = $_GET['id'];
     $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
     $stmt->execute([$userId]);
 
-    // redireciona após a exclusão
+    // Redireciona após a exclusão
     header("Location: users.php");
     exit();
 }
 
-// pega a lista de usuários do banco
+// Pega todos os usuários do banco de dados
 $stmt = $conn->query("SELECT * FROM users");
 $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -81,7 +83,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $search = isset($_POST['search']) ? $_POST['search'] : '';
 
 if ($search) {
-    // Buscar usuários pelo nome
+    // Busca usuários pelo nome
     $stmt = $conn->prepare("SELECT * FROM users WHERE LOWER(username) LIKE LOWER(?)");
     $stmt->execute(['%' . $search . '%']);
 } else {
@@ -89,15 +91,13 @@ if ($search) {
     $stmt = $conn->query("SELECT * FROM users");
 }
 
-$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC); // Recupera os usuários
 ?>
 
 
-<!-- conteúdo centralizado -->
+<!-- Conteúdo da página -->
 <div class="container" style="max-width: 80vw; margin: 0 auto;">
-    <!-- tabela com os usuários -->
+    <!-- Título da página -->
     <h2 class="mt-4">Gerenciar usuários</h2>
 
     <!-- Formulário de pesquisa -->
@@ -109,7 +109,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <button type="submit" class="btn" style="background-color: #30A7D6; color: white;">Buscar</button>
     </form>
 
-
+    <!-- Tabela com os usuários -->
     <table class="table table-striped table-bordered table-hover">
         <thead class="thead-dark">
             <tr>
@@ -130,6 +130,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= $u['telefone']; ?></td>
                     <td><?= $u['admin'] ? 'SIM' : 'NÃO'; ?></td>
                     <td>
+                        <!-- Ações de edição e exclusão -->
                         <a href="users.php?action=edit&id=<?= $u['id']; ?>" class="btn btn-warning btn-sm mr-2"
                             style="color: black;">Editar</a>
                         <a href="users.php?action=delete&id=<?= $u['id']; ?>" class="btn btn-danger btn-sm"
@@ -139,11 +140,12 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <?php endforeach; ?>
         </tbody>
     </table>
+    <!-- Link para adicionar um novo usuário -->
     <a href="users.php?action=add" class="btn" style="background-color: #30A7D6; color: white;">Adicionar um novo
         usuário</a>
 
     <?php if (isset($_GET['action']) && $_GET['action'] == 'edit' && isset($user)): ?>
-        <!-- formulário de edição -->
+        <!-- Formulário de edição de usuário -->
         <div class="ml-3 mb-3">
             <h2>Editar usuário</h2>
             <form action="users.php" method="POST">
@@ -177,7 +179,7 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
 
     <?php if (isset($_GET['action']) && $_GET['action'] == 'add'): ?>
-        <!-- formulário de adicionar novo usuário -->
+        <!-- Formulário para adicionar novo usuário -->
         <div class="ml-3 mb-3">
             <h2>Adicionar novo usuário</h2>
             <form action="users.php" method="POST">
@@ -201,12 +203,14 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <input type="checkbox" class="form-check-input" id="admin" name="admin">
                     <label class="form-check-label" for="admin">Admin</label>
                 </div>
-                <button type="submit" class="btn btn-success mt-2" name="add_user">adicionar usuário</button>
+                <button type="submit" class="btn btn-success mt-2" name="add_user">Adicionar usuário</button>
             </form>
         </div>
     <?php endif; ?>
 </div>
+
 <script>
+    // Função de confirmação antes de excluir
     function confirmDelete() {
         return confirm("Tem certeza que deseja excluir este usuário?");
     }
