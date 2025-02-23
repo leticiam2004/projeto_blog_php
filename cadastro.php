@@ -1,6 +1,11 @@
-<?php include "admin/db.connect.php"; ?>
-<?php
+<?php include "admin/db.class.php";
+include "header.php";
 
+// criar instância da classe db pra tabela users e pegar conexão
+$db = new db('users');
+$conn = $db->conn();
+
+// valida se tem campo vazio
 function validateEmptyFields($username, $email, $password)
 {
     if (empty($username) || empty($email) || empty($password)) {
@@ -9,6 +14,7 @@ function validateEmptyFields($username, $email, $password)
     return null;
 }
 
+// valida se o nome de usuário tem só letras e números
 function validateUsername($username)
 {
     if (!preg_match('/^[a-zA-Z0-9]*$/', $username)) {
@@ -17,6 +23,7 @@ function validateUsername($username)
     return null;
 }
 
+// valida se o e-mail tem formato válido
 function validateEmail($email)
 {
     if (!preg_match('/^[\w\-.]+@([\w-]+\.)+[\w-]{2,4}$/', $email)) {
@@ -25,49 +32,59 @@ function validateEmail($email)
     return null;
 }
 
-function validatePassword($password, $confirmPassword)
+// valida telefone (11 dígitos)
+function validatePhone($telefone)
 {
-    if (strlen($password) < 8 || !preg_match('/[a-zA-Z]/', $password) || !preg_match('/[0-9]/', $password)) {
-    }
-    if ($password !== $confirmPassword) {
-        return array("status" => "FAILED", "message" => "A senha deve ter pelo menos 8 caracteres e incluir letras e números.");
+    // validar número de telefone no formato
+    if (!preg_match('/^\d{11}$/', $telefone)) {
+        return array("status" => "FAILED", "message" => "Por favor, coloque um número de telefone válido.");
     }
     return null;
 }
 
+// valida se as senhas coincidem
+function validatePassword($password, $confirmPassword)
+{
+    if ($password !== $confirmPassword) {
+        return array("status" => "FAILED", "message" => "As senhas não coincidem.");
+    }
+    return null;
+}
+
+
+// checa se o e-mail já tá cadastrado
 function checkEmailExists($email, $conn)
 {
     $sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->execute([$email]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if ($result->num_rows > 0) {
+    if ($result) {
         return true; // email já existe
     }
 
     return false; // email não existe
 }
 
+// variáveis pra mensagem e erros
 $message = "";
 $errors = [];
 
-
+// se o método for POST, processa os dados
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    // receber dados do formulario 
-
+    // receber dados do formulario
     $username = trim($_POST['username']);
     $email = trim($_POST['email']);
+    $telefone = trim($_POST['telefone']);
     $password = trim($_POST['password']);
     $confirmPassword = trim($_POST['confirm_password']);
 
-    // verificar se existem os fields no array POST
-
+    // checa se os campos existem
     if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['password'])) {
 
-        // validar campos vazios 
+        // validar campos vazios
         if ($emptyError = validateEmptyFields($username, $email, $password)) {
             $errors[] = $emptyError['message'];
         }
@@ -82,6 +99,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errors[] = $emailError['message'];
         }
 
+        // Validar telefone
+        if (!is_null($telefoneError = validatePhone($telefone))) {
+            $errors[] = $telefoneError['message'];
+        }
+
         // validar senha
         if (!is_null($passwordError = validatePassword($password, $confirmPassword))) {
             $errors[] = $passwordError['message'];
@@ -92,30 +114,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $errors[] = "Este e-mail já está cadastrado!";
         }
 
+        // se não houver erros, insere no banco
         if (empty($errors)) {
 
-            // hash a senha
+            // fazer hash da senha
             $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
-            // preparar query 
-
-            $sql = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
+            // prepara e executa query
+            $sql = "INSERT INTO users (username, email, telefone, password) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
 
             // inserir query
-
-            if ($conn->query($sql) === TRUE) {
+            if ($stmt->execute([$username, $email, $telefone, $hashed_password])) {
                 $message = "Cadastro realizado com sucesso!";
             } else {
-                $message = "Erro ao enviar dados: " . $conn->error;
+                $message = "Erro ao enviar dados: " . $conn->errorInfo()[2];
             }
 
-            // encerrar conexao
-
-            $conn->close();
+            // fecha conexao
+            $conn = null;
         }
     }
 }
-
 
 ?>
 
@@ -134,44 +154,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-    <header class="text-white py-3" style="background-color: #e23a26">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div class="logo">
-                <a href="../index.php">
-                    <img src="https://iili.io/2b9Q9mN.png" id="logo" alt="PokéMart" />
-                </a>
-            </div>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Alterna navegação">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item ">
-                            <a class="nav-link font-weight-bold" href="index.php">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link font-weight-bold" href="user_sobre.php">Sobre nós</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link font-weight-bold" href="user_produtos.php">Loja</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link font-weight-bold" href="user_contato.php">Contato</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link font-weight-bold" href="login.php">Login<span class="sr-only">(Página
-                                    atual)</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </div>
-    </header>
 
     <div class="container mt-4 mb-5">
-
         <form method="POST">
             <div class="form-group">
                 <label for="name">Usuário</label>
@@ -180,6 +164,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-group">
                 <label for="email">Endereço de email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="jessie@gmail.com">
+            </div>
+            <div class="form-group">
+                <label for="telefone">Telefone</label>
+                <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(XX) X XXXX-XXXX">
             </div>
             <div class="form-group">
                 <label for="password">Senha</label>
@@ -204,7 +192,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     } ?>
                 </div>
             <?php endif; ?>
-
         </form>
     </div>
 

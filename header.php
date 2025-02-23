@@ -1,4 +1,4 @@
-<?php session_start(); // Start the session to check login status ?>
+<?php session_start();?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -70,11 +70,3 @@
             </nav>
         </div>
     </header>
-
-    <!-- Your page content goes here -->
-
-    <!-- Include your footer if needed -->
-    <!-- <?php include "footer.php"; ?> -->
-</body>
-
-</html>

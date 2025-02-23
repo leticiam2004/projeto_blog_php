@@ -1,15 +1,19 @@
 <?php
-include "admin/db.connect.php"; // Conexão com o banco
+include "admin/db.class.php"; // Conexão com o banco
 include "header.php"; // Cabeçalho com a inclusão do Bootstrap
+
+// Instancia a classe db e inicializa a conexão
+$db = new db('contato'); // 'contato' é o nome da tabela
+$conn = $db->conn(); // Obtém a conexão
+
 
 // Lógica para editar o contato
 if (isset($_GET['id']) && isset($_GET['action']) && $_GET['action'] == 'edit') {
     $contactId = $_GET['id'];
-    $stmt = $conn->prepare("SELECT * FROM contato WHERE id = ?");
-    $stmt->bind_param("i", $contactId);
+    $stmt = $conn->prepare("SELECT * FROM contato WHERE id = :id");
+    $stmt->bindParam(':id', $contactId, PDO::PARAM_INT);
     $stmt->execute();
-    $result = $stmt->get_result();
-    $contact = $result->fetch_assoc();
+    $contact = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // Verifica se o contato foi encontrado
     if (!$contact) {
@@ -24,8 +28,9 @@ if (isset($_POST['edit_contact'])) {
     $situacao = $_POST['situacao'];
 
     // Atualiza a situação no banco de dados
-    $stmt = $conn->prepare("UPDATE contato SET situacao = ? WHERE id = ?");
-    $stmt->bind_param("si", $situacao, $contactId);
+    $stmt = $conn->prepare("UPDATE contato SET situacao = :situacao WHERE id = :id");
+    $stmt->bindParam(':situacao', $situacao, PDO::PARAM_STR);
+    $stmt->bindParam(':id', $contactId, PDO::PARAM_INT);
     $stmt->execute();
 
     // Redireciona para a página de contatos após a edição
@@ -33,21 +38,35 @@ if (isset($_POST['edit_contact'])) {
     exit();
 }
 
-// Lógica para deletar o contato
+// lógica para deletar o contato
 if (isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['id'])) {
     $contactId = $_GET['id'];
-    $stmt = $conn->prepare("DELETE FROM contato WHERE id = ?");
-    $stmt->bind_param("i", $contactId);
+    $stmt = $conn->prepare("DELETE FROM contato WHERE id = :id");
+    $stmt->bindParam(':id', $contactId, PDO::PARAM_INT);
     $stmt->execute();
 
-    // Redireciona para a página de contatos após a exclusão
+    // manda para a página de contatos após a exclusão
     header("Location: contatos.php");
     exit();
 }
+// consulta para listar os contatos
+$stmt = $conn->prepare("SELECT * FROM contato");
+$stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Consulta para listar os contatos
-$sql = "SELECT * FROM contato";
-$result = $conn->query($sql);
+$search = isset($_POST['search']) ? $_POST['search'] : '';
+
+if ($search) {
+    // pesquisa usuários pelo nome
+    $stmt = $conn->prepare("SELECT * FROM contato WHERE LOWER(nome_completo) LIKE LOWER(?)");
+    $stmt->execute(['%' . $search . '%']);
+    $contato = $stmt->fetchAll(PDO::FETCH_ASSOC); // Guardar os resultados da pesquisa
+} else {
+    // Se não houver pesquisa, exibe todos os usuários
+    $stmt = $conn->query("SELECT * FROM contato");
+    $contato = $stmt->fetchAll(PDO::FETCH_ASSOC); // Guardar os resultados da consulta
+}
+
 ?>
 
 <!-- Centralizando o conteúdo em um container -->
@@ -55,7 +74,18 @@ $result = $conn->query($sql);
 
     <!-- Tabela com os tickets -->
     <h2 class="mt-4">Lista de Tickets</h2>
-    <?php if ($result->num_rows > 0): ?>
+
+    <!-- Formulário de pesquisa -->
+    <form action="contatos.php" method="post" class="mb-4">
+        <div class="form-group">
+            <input type="text" name="search" class="form-control" placeholder="Pesquisar por nome"
+                value="<?= isset($_POST['search']) ? $_POST['search'] : ''; ?>">
+        </div>
+        <button type="submit" class="btn" style="background-color: #30A7D6; color: white;">Buscar</button>
+    </form>
+
+    <!-- Exibindo a tabela de contatos -->
+    <?php if (count($contato) > 0): ?>
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
                 <tr>
@@ -69,51 +99,27 @@ $result = $conn->query($sql);
                 </tr>
             </thead>
             <tbody>
-                <?php while ($row = $result->fetch_assoc()): ?>
+                <?php foreach ($contato as $row): ?>
                     <tr>
                         <td><?= $row['id']; ?></td>
                         <td><?= $row['nome_completo']; ?></td>
                         <td><?= $row['email']; ?></td>
                         <td><?= $row['assunto']; ?></td>
                         <td><?= $row['situacao']; ?></td>
-                        <td style="white-space: normal; word-wrap: break-word; overflow-wrap: break-word;"><?= $row['problema']; ?></td>
+                        <td style="white-space: normal; word-wrap: break-word; overflow-wrap: break-word;">
+                            <?= $row['problema']; ?>
+                        </td>
                         <td>
-                            <a href="contatos.php?action=edit&id=<?= $row['id']; ?>" class="btn btn-warning btn-sm">Editar</a>
-                            <a href="contatos.php?action=delete&id=<?= $row['id']; ?>" class="btn btn-danger btn-sm">Deletar</a>
+                            <a href="contatos.php?action=edit&id=<?= $row['id']; ?>" class="btn btn-warning btn-sm mb-2"
+                                style="color: black;">Editar</a>
+                            <a href="contatos.php?action=delete&id=<?= $row['id']; ?>" class="btn btn-danger btn-sm"
+                                style="color: white;">Deletar</a>
                         </td>
                     </tr>
-                <?php endwhile; ?>
+                <?php endforeach; ?>
             </tbody>
         </table>
     <?php else: ?>
         <p>Nenhum contato encontrado.</p>
     <?php endif; ?>
-
-    <!-- Formulário de Edição -->
-    <?php if (isset($_GET['action']) && $_GET['action'] == 'edit' && isset($contact)): ?>
-        <h3>Editar Situação do Contato</h3>
-        <form action="contatos.php" method="POST">
-            <input type="hidden" name="id" value="<?= $contact['id']; ?>">
-
-            <!-- O Nome e Email não são mais editáveis, somente a Situação -->
-            <div class="form-group">
-                <label for="assunto">Assunto:</label>
-                <input type="text" class="form-control" id="assunto" name="assunto" value="<?= $contact['assunto']; ?>"
-                    disabled>
-            </div>
-
-            <div class="form-group">
-                <label for="situacao">Situação:</label>
-                <select class="form-control" id="situacao" name="situacao" required>
-                    <option value="Novo" <?= (isset($contact['situacao']) && $contact['situacao'] == 'Novo') ? 'selected' : ''; ?>>
-                        Novo</option>
-                    <option value="Em andamento" <?= (isset($contact['situacao']) && $contact['situacao'] == 'Em andamento') ? 'selected' : ''; ?>>Em Andamento</option>
-                    <option value="Resolvido" <?= (isset($contact['situacao']) && $contact['situacao'] == 'Resolvido') ? 'selected' : ''; ?>>Resolvido</option>
-                </select>
-            </div>
-
-            <button type="submit" class="btn btn-success mb-4" name="edit_contact">Salvar Alterações</button>
-        </form>
-    <?php endif; ?>
 </div>
-

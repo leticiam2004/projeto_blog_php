@@ -1,42 +1,52 @@
-<?php include "header.php"; ?>
-<?php include "admin/db.connect.php"; ?>
 <?php
+include "admin/db.class.php"; // conexão com o banco de dados via PDO
+include "header.php"; // importa o cabeçalho, já com bootstrap incluso
 
-if (isset($_GET['test_message']) && $_GET['test_message'] == 'true') {
-    $message = "Mensagem de teste: Dados enviados com sucesso!";
-}
+// Instancia a classe db e inicializa a conexão
+$db = new db('contato'); // 'contato' é o nome da tabela
+$db->checkLogin();
+$conn = $db->conn(); // Obtém a conexão
 
+// Inicializa a variável de mensagem
+$message = "";
+
+// Verifica se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    // receber dados do formulario 
-
+    // Obtém os dados do formulário
     $nome_completo = $_POST['nome'];
     $email = $_POST['email'];
     $assunto = $_POST['assunto'];
     $problema = $_POST['problema'];
 
-    // preparar query 
+    // Prepara a consulta SQL para inserção de dados
+    $sql = "INSERT INTO contato (nome_completo, email, assunto, problema) 
+            VALUES (:nome_completo, :email, :assunto, :problema)";
 
-    $sql = "INSERT INTO contato (nome_completo, email, assunto, problema) VALUES ('$nome_completo', '$email', '$assunto', '$problema')";
+    try {
+        // Prepara a declaração SQL
+        $stmt = $conn->prepare($sql);
 
-    // inserir query
+        // Associa os parâmetros aos valores
+        $stmt->bindParam(':nome_completo', $nome_completo);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':assunto', $assunto);
+        $stmt->bindParam(':problema', $problema);
 
-    if ($conn->query($sql) === TRUE) {
-        $message = "Dados enviados com sucesso!";
-    } else {
-        $message = "Erro ao enviar dados: " . $conn->error;
+        // Executa a consulta
+        if ($stmt->execute()) {
+            $message = "Dados enviados com sucesso!";
+        } else {
+            $message = "Erro ao enviar dados.";
+        }
+    } catch (PDOException $e) {
+        $message = "Erro ao enviar dados: " . $e->getMessage();
     }
-
-    // encerrar conexao
-
-    $conn->close();
-
 }
 
 ?>
 
 <div class="collapse navbar-collapse" id="navbarNav">
-    
+
     <ul class="navbar-nav">
         <li class="nav-item ">
             <a class="nav-link font-weight-bold" href="index.php">Home</a>
@@ -61,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </header>
 
 <div class="container mt-4 mb-5">
-<h1>Entre em contato!</h1>
+    <h1>Entre em contato!</h1>
     <form method="POST">
         <div class="form-group">
             <label for="exampleFormControlInput1">Nome completo</label>
@@ -93,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <button type="submit" class="btn" style="background-color: #30A7D6; color: white;">Enviar</button>
 
-        <?php if (isset($message)) {
+        <?php if (isset($message) && $message != "") {
             echo "<div class='alert alert-info mt-2'>$message</div>";
         } ?>
 

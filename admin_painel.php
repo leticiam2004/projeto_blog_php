@@ -1,5 +1,10 @@
-<?php include "admin/db.connect.php"; ?>
+<?php include "admin/db.class.php"; ?>
 <?php include "header.php"; ?>
+<?php
+$db = new db('users');
+$db->checkLogin();
+$db->checkAdminLogin();
+?>
 
 <div class="container mt-5 mb-5">
     <h2 class="mb-4">Painel de Administração</h2>

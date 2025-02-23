@@ -1,6 +1,3 @@
-<head>
-    <link rel="stylesheet" href="stylesheet.css" />
-</head>
 
 <footer class="text-white py-3" style="background-color: #e23a26;">
     <div class="container text-center">

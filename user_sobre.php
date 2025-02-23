@@ -1,4 +1,9 @@
-<?php include "header.php"; ?>
+<?php include "admin/db.class.php";
+include "header.php";
+
+$db = new db('users');
+$db->checkLogin();
+?>
 
 
 <div class="collapse navbar-collapse" id="navbarNav">
